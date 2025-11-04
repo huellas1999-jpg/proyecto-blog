@@ -101,11 +101,11 @@ h1{ margin-top:0; font-size:1.8rem; color:var(--accent); }
   box-shadow: 0 6px 28px rgba(34,40,49,0.08);
   flex: 0 0 300px;
 }
-.imagen0-img {
+.imagen0-imgo {
   text-align: center;
   margin: 0.2em 0 0.2em 0; /* margen mínimo arriba y abajo */
 }
-.imagen0-img img {
+.imagen0-imgo img {
   width: 200%;
   max-width: 720px;
   height: auto;
