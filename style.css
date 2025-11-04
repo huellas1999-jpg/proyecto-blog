@@ -107,7 +107,7 @@ h1{ margin-top:0; font-size:1.8rem; color:var(--accent); }
 }
 
 .imagen0-img img {
-  width: 100%;
+  width: 400px;
   max-width: 500px;
   height: auto;
   border-radius: 14px;
