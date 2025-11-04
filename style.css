@@ -97,7 +97,7 @@ h1{ margin-top:0; font-size:1.8rem; color:var(--accent); }
   height: 500px;
   object-fit:cover;
   border-radius:10px;
-  box-shadow: 0 6px 28px rgba(34,40,49,0.08);
+  /*box-shadow: 0 6px 28px rgba(34,40,49,0.08);*/
   flex: 0 0 300px;
 }
 .text-block{ flex:1; min-width: 220px; }
