@@ -1,25 +1,25 @@
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(120deg, #232526, #414345);
-  color: #ececec;
+  background: linear-gradient(120deg, #e7eaf6, #fff);
+  color: #1b262c;
   min-height: 100vh;
 }
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 .sidebar {
-  background: rgba(34, 40, 49, 0.97);
+  background: #b8bedd; /* pastel lavanda */
   padding: 2rem;
   width: 300px;
   min-width: 230px;
-  box-shadow: 2px 0 14px rgba(0,0,0,0.4);
+  box-shadow: 2px 0 14px rgba(0,0,0,0.1);
 }
 .sidebar h2 {
-  font-size: 1.4rem;
-  letter-spacing: 2px;
-  margin-bottom: 1.2em;
+  font-size: 1.3rem;
+  margin-bottom: 1em;
+  color: #524c7a;
 }
 .sidebar ul {
   list-style: none;
@@ -29,17 +29,18 @@ body {
   margin-bottom: 1.2em;
 }
 .sidebar ul li a {
-  color: #00adb5;
+  color: #524c7a;
   font-weight: 600;
   text-decoration: none;
   display: block;
   padding: 0.4em 0.8em;
   border-radius: 7px;
+  background: rgba(255,255,255,0.35);
   transition: background 0.2s, color 0.2s;
 }
 .sidebar ul li a:hover {
-  background: #00adb5;
-  color: #232526;
+  background: #dbe2ef;
+  color: #1b262c;
 }
 .content {
   flex: 1;
@@ -48,6 +49,10 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  background: #fff; /* Panel blanco */
+  border-radius: 0 20px 20px 0;
+  min-height: 100vh;
+  box-shadow: 0 8px 48px rgba(99, 105, 189, 0.08);
 }
 .blog-post {
   display: none;
@@ -71,19 +76,32 @@ h1 {
   width: 260px;
   height: 180px;
   object-fit: cover;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 24px rgba(34, 40, 49, 0.14);
 }
 .img-text div {
   flex: 1;
 }
+.footer {
+  width: 100%;
+  text-align: center;
+  background: #b8bedd;
+  color: #524c7a;
+  padding: 1em 0;
+  font-size: 1em;
+  letter-spacing: 1px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
 @media (max-width: 740px) {
   .container { flex-direction: column; }
-  .sidebar { width: 100%; min-width: unset; box-shadow: none; border-bottom: 1px solid #444; }
-  .content { padding: 1.2rem 0.7rem; }
+  .sidebar { width: 100%; min-width: unset; box-shadow: none; border-bottom: 1px solid #dbe2ef; border-radius: 0 0 20px 20px;}
+  .content { padding: 1.2rem 0.7rem; border-radius: 0; }
   .img-text { flex-direction: column; align-items: center; }
   .img-text img { width: 100%; height: auto; }
+  .footer { position: static; }
 }
 @keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { opacity: 0;}
+  to { opacity: 1;}
 }
