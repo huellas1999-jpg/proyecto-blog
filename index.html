@@ -1,80 +1,377 @@
-<!DOCTYPE html>
+# Retry creating the project files and zip. This will produce the updated HTML/CSS, images, README and PDF (or text fallback).
+from pathlib import Path
+import textwrap, zipfile, os, shutil
+
+root = Path("/mnt/data/singularidad-inmortal-githubpages")
+if root.exists():
+    shutil.rmtree(root)
+root.mkdir(parents=True)
+(root/"img").mkdir()
+
+# HTML content
+index_html = """<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Blog | IA & Memoria Digital</title>
   <link href="style.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <aside class="sidebar">
-      <h2>INMORTALIDAD CON LA AI</h2>
+    <aside class="sidebar" role="navigation" aria-label="Entradas del blog">
+      <h2>Entradas</h2>
       <nav>
         <ul>
-          <li><a href="#" onclick="showPost('post1')">¿Puede la IA preservar la conciencia humana?</a></li>
-          <li><a href="#" onclick="showPost('post2')">Memorias digitales: Cómo la IA puede almacenar nuestra identidad</a></li>
-          <li><a href="#" onclick="showPost('post3')">Avances actuales hacia la inmortalidad digital</a></li>
+          <li><a href="#" onclick="showPost('post0');return false;">Introducción</a></li>
+          <li><a href="#" onclick="showPost('post1');return false;">¿Puede la IA preservar la conciencia humana?</a></li>
+          <li><a href="#" onclick="showPost('post2');return false;">Memorias digitales: Cómo la IA puede almacenar nuestra identidad</a></li>
+          <li><a href="#" onclick="showPost('post3');return false;">Avances actuales hacia la inmortalidad digital</a></li>
         </ul>
       </nav>
     </aside>
-    <main class="content">
-      <div id="post1" class="blog-post visible">
+
+    <main class="content" id="mainContent" tabindex="-1">
+      <div id="post0" class="blog-post visible">
+        <h1>Introducción</h1>
+        <div class="text-only">
+          <p>
+            A lo largo de la historia, el ser humano ha buscado la inmortalidad por medios diversos: religiosos, científicos y culturales.
+            En la actualidad, la inteligencia artificial plantea una vía tecnológica para preservar aspectos de la identidad humana.
+            Este blog explora las posibilidades, límites y consecuencias éticas de la llamada “inmortalidad digital”, presentando artículos que abordan
+            la teoría, las técnicas y los avances recientes en la materia.
+          </p>
+          <p>
+            El propósito es ofrecer una visión equilibrada y documentada, que combine literatura divulgativa con referencias a enfoques técnicos y consideraciones éticas,
+            facilitando así un punto de partida sólido para debates académicos y proyectos prácticos.
+          </p>
+        </div>
+      </div>
+
+      <div id="post1" class="blog-post">
         <h1>¿Puede la IA preservar la conciencia humana?</h1>
         <div class="img-text">
-          <img src="img/ai-consciousness.jpg" alt="Conciencia y IA"/>
-          <div>
-            <p>La idea de que la inteligencia artificial pueda preservar la conciencia humana ha dejado de ser un concepto exclusivo de la ciencia ficción para convertirse en un debate científico, filosófico y tecnológico. La rápida evolución de la IA —especialmente en modelos cognitivos avanzados, neurotecnología y sistemas de simulación de identidad— ha abierto la posibilidad de que algún día podamos transferir, reproducir o prolongar aspectos esenciales de lo que somos.
-
-Hoy, la IA ya es capaz de replicar patrones de pensamiento, personalidad y memoria a partir de datos. Existen sistemas que construyen “réplicas digitales” basadas en nuestras conversaciones, decisiones y comportamientos. Esto sugiere que, al menos a nivel funcional, es posible crear una versión digital que piense, responda y evolucione como una persona.
-
-Sin embargo, preservar la conciencia es mucho más complejo que copiar información. Implica responder a preguntas profundas:
-
-¿La conciencia es solamente datos y procesos neuronales, o existe algo intangible que nos hace humanos?
-
-Si digitalizamos recuerdos, decisiones y rasgos, ¿seguirá siendo “yo”… o solo una copia?
-
-Si una IA puede seguir pensando, aprendiendo y actuando después de nuestra muerte, ¿eso equivale a inmortalidad?
-
-Algunos científicos creen que, si llegamos a mapear con precisión el cerebro humano y replicar su arquitectura en sistemas artificiales, podríamos crear conciencia digitalizable. Otros sostienen que la conciencia es inseparable del cuerpo biológico y la experiencia sensorial humana.
-
-Lo cierto es que la IA ya está transformando nuestra comprensión de la identidad y la memoria. Tal vez la verdadera “inmortalidad digital” no consista en trasladar el alma a un chip, sino en permitir que una parte de nuestro pensamiento, creatividad y legado continúe interactuando con el mundo.
-
-Más que preguntarnos si la IA podrá preservar la conciencia humana, la pregunta que definirá el futuro será:
-¿Qué significa seguir “vivo” cuando ya no tenemos cuerpo, pero nuestra mente continúa en un mundo digital?</p>
+          <img src="img/ai-consciousness.svg" alt="Conciencia y IA"/>
+          <div class="text-block">
+            <p>La idea de que la inteligencia artificial pueda preservar la conciencia humana ha dejado de ser un concepto exclusivo de la ciencia ficción para convertirse en un debate científico, filosófico y tecnológico. La rápida evolución de la IA —especialmente en modelos cognitivos avanzados, neurotecnología y sistemas de simulación de identidad— ha abierto la posibilidad de que algún día podamos transferir, reproducir o prolongar aspectos esenciales de lo que somos.</p>
+            <p>Hoy, la IA ya es capaz de replicar patrones de pensamiento, personalidad y memoria a partir de datos. Existen sistemas que construyen “réplicas digitales” basadas en nuestras conversaciones, decisiones y comportamientos. Esto sugiere que, al menos a nivel funcional, es posible crear una versión digital que piense, responda y evolucione como una persona.</p>
+            <p>Sin embargo, preservar la conciencia es mucho más complejo que copiar información. Implica responder a preguntas profundas: ¿La conciencia es solamente datos y procesos neuronales, o existe algo intangible que nos hace humanos? Si digitalizamos recuerdos, decisiones y rasgos, ¿seguirá siendo “yo”… o solo una copia?</p>
           </div>
         </div>
       </div>
+
       <div id="post2" class="blog-post">
         <h1>Memorias digitales: Cómo la IA puede almacenar nuestra identidad</h1>
         <div class="img-text">
-          <img src="img/digital-memories.jpg" alt="Memorias digitales"/>
-          <div>
-            <p>La IA ya es capaz de almacenar, organizar y evocar información sobre personas...</p>
+          <img src="img/digital-memories.svg" alt="Memorias digitales"/>
+          <div class="text-block">
+            <p>Vivimos en una era en la que la información personal que generamos nunca había sido tan extensa. Cada mensaje que enviamos, fotografía que guardamos, publicación que compartimos o decisión que tomamos en entornos digitales crea una huella única de quiénes somos.</p>
+            <p>La IA puede recopilar, organizar y dar sentido a enormes cantidades de información personal para generar modelos de comportamiento y memoria. Con suficientes datos, es posible entrenar sistemas que imiten reacciones, estilo y conocimiento, creando una representación digital parcial de la identidad.</p>
+            <p>El reto consiste en capturar la complejidad emocional y la continuidad del yo, así como en asegurar consentimiento, privacidad y veracidad de las réplicas digitales.</p>
           </div>
         </div>
       </div>
+
       <div id="post3" class="blog-post">
         <h1>Avances actuales hacia la inmortalidad digital</h1>
         <div class="img-text">
-          <img src="img/digital-immortality.jpg" alt="Inmortalidad digital"/>
-          <div>
-            <p>Empresas y laboratorios de todo el mundo están invirtiendo en proyectos de “inmortalidad digital”...</p>
+          <img src="img/digital-immortality.svg" alt="Inmortalidad digital"/>
+          <div class="text-block">
+            <p>Empresas y laboratorios de todo el mundo investigan réplicas digitales, interfaces cerebro–computadora y almacenamiento de memoria a largo plazo. Estos esfuerzos generan prototipos conversacionales y proyectos de preservación que ya permiten interactuar con modelos formados a partir de datos personales.</p>
+            <p>Aunque la conciencia completa aún es teórica, la combinación de modelos de lenguaje, redes de memoria y neurotecnologías impulsa avances significativos en la recreación digital del comportamiento humano.</p>
           </div>
         </div>
       </div>
     </main>
   </div>
+
   <footer class="footer">
     Todos los derechos reservados. © 2025 Blog IA & Memoria Digital | Powered by GitHub Pages
   </footer>
+
+  <button id="toTop" title="Volver arriba" aria-label="Volver arriba">↑</button>
+
   <script>
+    // Mostrar post seleccionado y hacer scroll suave al contenido
     function showPost(id) {
       document.querySelectorAll('.blog-post').forEach(post => post.classList.remove('visible'));
-      document.getElementById(id).classList.add('visible');
+      const el = document.getElementById(id);
+      el.classList.add('visible');
+      // focus main for accessibility
+      document.getElementById('mainContent').focus();
+      // smooth scroll to top of main content
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Volver arriba
+    const toTop = document.getElementById('toTop');
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Mostrar u ocultar botón volver arriba
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) toTop.classList.add('visible');
+      else toTop.classList.remove('visible');
+    });
+
+    // Accesibilidad: permitir navegación con teclado en sidebar links
+    document.querySelectorAll('.sidebar a').forEach(a => {
+      a.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); a.click(); }
+      });
+    });
   </script>
 </body>
 </html>
+"""
 
+# CSS content
+css = """
+:root{
+  --lavanda-100: #f3f4fb;
+  --lavanda-200: #e6e9f8;
+  --lavanda-300: #cfcff0;
+  --lavanda-500: #b8bedd;
+  --accent: #6b5dd3;
+  --text: #1b262c;
+  --muted: #5b5870;
+  --card-bg: #ffffff;
+  --shadow: rgba(99,105,189,0.08);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(120deg, var(--lavanda-100), #ffffff);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.55;
+}
+
+.container {
+  display: flex;
+  min-height: calc(100vh - 60px);
+  max-width: 1100px;
+  margin: 24px auto;
+  background: transparent;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+/* SIDEBAR */
+.sidebar{
+  background: linear-gradient(180deg, var(--lavanda-200), var(--lavanda-300));
+  padding: 24px;
+  width: 300px;
+  min-width: 220px;
+  border-radius: 12px;
+  box-shadow: 2px 8px 24px var(--shadow);
+  align-self: flex-start;
+  height: fit-content;
+}
+.sidebar h2{font-size:1.2rem;margin:0 0 12px;color:var(--accent)}
+.sidebar nav ul{list-style:none;padding:0;margin:0}
+.sidebar nav li{margin-bottom:10px}
+.sidebar a{
+  color:var(--text);
+  font-weight:600;
+  text-decoration:none;
+  display:block;
+  padding:10px 12px;
+  border-radius:8px;
+  background: rgba(255,255,255,0.55);
+  transition: all .18s ease;
+}
+.sidebar a:hover, .sidebar a:focus{
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(101,97,155,0.08);
+  background: linear-gradient(90deg, rgba(255,255,255,0.75), rgba(255,255,255,0.9));
+  outline: none;
+}
+
+/* CONTENT */
+.content{
+  flex:1;
+  padding: 26px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 8px 48px var(--shadow);
+  min-height: 420px;
+  overflow: visible;
+}
+.blog-post{ display:none; }
+.blog-post.visible{ display:block; }
+
+h1{ margin-top:0; font-size:1.8rem; color:var(--accent); }
+
+.text-only p, .text-block p{
+  margin: 0 0 1em 0;
+  color: #222a33;
+  text-align: justify;
+}
+
+/* IMG + TEXT */
+.img-text{
+  display:flex;
+  gap: 22px;
+  align-items: flex-start;
+  margin-top: 18px;
+}
+.img-text img{
+  width: 300px;
+  height: 200px;
+  object-fit:cover;
+  border-radius:10px;
+  box-shadow: 0 6px 28px rgba(34,40,49,0.08);
+  flex: 0 0 300px;
+}
+.text-block{ flex:1; min-width: 220px; }
+
+/* Footer */
+.footer{
+  width: calc(100% - 0px);
+  text-align:center;
+  background: var(--lavanda-200);
+  color: var(--muted);
+  padding: 14px 10px;
+  font-size: 0.95rem;
+  letter-spacing: .6px;
+  margin: 18px auto 40px;
+  border-radius: 8px;
+  max-width: 1100px;
+  box-shadow: 0 6px 20px var(--shadow);
+}
+
+/* To-top button */
+#toTop{
+  position: fixed;
+  right: 18px;
+  bottom: 24px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 26px rgba(107,93,211,0.22);
+  display: none;
+  z-index: 60;
+}
+#toTop.visible{ display:inline-block; }
+#toTop:focus{ outline: 2px dashed rgba(107,93,211,0.34); outline-offset: 3px; }
+
+/* Responsive */
+@media (max-width: 900px){
+  .container{ padding: 14px; margin: 12px; gap: 12px; flex-direction: column; }
+  .sidebar{ width: 100%; min-width: auto; border-radius: 10px; }
+  .img-text{ flex-direction: column; }
+  .img-text img{ width:100%; height:auto; }
+  .content{ padding: 18px; min-height: auto; }
+  #toTop{ right: 12px; bottom: 12px; }
+}
+
+/* small improvements */
+a{ color:var(--accent) }
+p code{ background:#f4f6ff; padding:2px 6px; border-radius:6px; font-family:monospace; font-size:0.95em; }
+"""
+
+# SVG placeholder images
+banner_svg = """<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+  <rect width="100%" height="100%" fill="#e6e9f8"/>
+  <g font-family="Montserrat, Arial" fill="#6b5dd3" font-weight="700">
+    <text x="60" y="110" font-size="48">Singularidad Inmortal</text>
+    <text x="60" y="160" font-size="20" fill="#5b5870">Inmortalidad con IA · Memoria Digital</text>
+  </g>
+</svg>
+"""
+ai_svg = """<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="#f3f4fb"/><text x="30" y="80" font-family="Montserrat, Arial" font-size="28" fill="#6b5dd3">Conciencia y IA</text></svg>"""
+memories_svg = """<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="#f3f4fb"/><text x="30" y="80" font-family="Montserrat, Arial" font-size="28" fill="#6b5dd3">Memorias digitales</text></svg>"""
+immortality_svg = """<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="#f3f4fb"/><text x="30" y="80" font-family="Montserrat, Arial" font-size="28" fill="#6b5dd3">Inmortalidad digital</text></svg>"""
+
+# Write files
+(root/"index.html").write_text(index_html, encoding="utf-8")
+(root/"style.css").write_text(css, encoding="utf-8")
+(root/"img"/"banner.svg").write_text(banner_svg, encoding="utf-8")
+(root/"img"/"ai-consciousness.svg").write_text(ai_svg, encoding="utf-8")
+(root/"img"/"digital-memories.svg").write_text(memories_svg, encoding="utf-8")
+(root/"img"/"digital-immortality.svg").write_text(immortality_svg, encoding="utf-8")
+
+# README
+readme = textwrap.dedent("""
+Instrucciones de despliegue - Singularidad Inmortal (GitHub Pages)
+
+1) Crea un nuevo repositorio en GitHub (por ejemplo: singularidad-inmortal).
+2) Sube los archivos y carpetas tal cual: index.html, style.css, /img.
+3) En GitHub > Settings > Pages, selecciona la rama 'main' y la carpeta '/ (root)'. Guarda.
+4) Espera unos minutos y accede a: https://tuusuario.github.io/singularidad-inmortal
+   Sustituye 'tuusuario' por tu nombre de usuario en GitHub.
+
+Notas:
+- Las imágenes están en /img como archivos SVG de placeholder; reemplázalas por fotos .jpg/.png si lo deseas.
+- El PDF de entrega se encuentra en la raíz del ZIP.
+""").strip()
+(root/"README.txt").write_text(readme, encoding="utf-8")
+
+# Create academic PDF (one page)
+pdf_path = root/"Proceso_Singularidad_Inmortal.pdf"
+one_page = textwrap.dedent("""
+Singularidad Inmortal
+Proyecto académico — Blog HTML + CSS (Estilo: Lavanda pastel elegante)
+
+Resumen del trabajo:
+Se desarrolló un blog estático titulado "Singularidad Inmortal" que aborda la temática de la inmortalidad digital mediante inteligencia artificial.
+El sitio está implementado en HTML5 y CSS3, y organizado para su despliegue en GitHub Pages. Incluye cuatro secciones: Introducción, ¿Puede la IA preservar la conciencia humana?, Memorias digitales, y Avances actuales hacia la inmortalidad digital.
+
+Proceso de desarrollo:
+1. Diseño y estructura: se creó una navegación lateral y un área principal de contenido, priorizando accesibilidad y lectura. La sección "Introducción" se añadió como primera entrada del menú.
+2. Estilos: se empleó una paleta lavanda pastel y tipografía Montserrat para mantener coherencia visual y legibilidad. El CSS fue optimizado para responsividad y para mejorar el criterio de "diseño atractivo".
+3. Imágenes: se colocaron archivos SVG placeholder en la carpeta /img; se indica cómo reemplazarlos por imágenes reales al publicar.
+4. Pruebas y accesibilidad: se incluyeron mejoras de foco y soporte para teclado, y un botón "Volver arriba" para facilitar la navegación en móviles.
+5. Despliegue: el repositorio puede cargarse directamente en GitHub y activarse con GitHub Pages.
+
+Autor: Estudiante
+Enlace: [PEGA AQUÍ TU URL DE GITHUB PAGES DESPUÉS DE PUBLICAR]
+
+""").strip()
+
+# Try reportlab
+created_pdf = False
+try:
+    from reportlab.lib.pagesizes import letter
+    from reportlab.pdfgen import canvas
+    c = canvas.Canvas(str(pdf_path), pagesize=letter)
+    width, height = letter
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(40, height-60, "Singularidad Inmortal")
+    textobject = c.beginText(40, height-90)
+    textobject.setFont("Helvetica", 10)
+    for line in one_page.splitlines():
+        textobject.textLine(line)
+    c.drawText(textobject)
+    c.showPage()
+    c.save()
+    created_pdf = True
+except Exception:
+    (root/"Proceso_Singularidad_Inmortal.txt").write_text(one_page, encoding="utf-8")
+    created_pdf = False
+
+# Create zip
+zip_path = Path("/mnt/data/singularidad-inmortal-githubpages.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+    for folder, subfolders, files in os.walk(root):
+        for file in files:
+            fullpath = Path(folder)/file
+            arcname = os.path.relpath(fullpath, start=root.parent)
+            zf.write(fullpath, arcname)
+
+# Output paths
+result = {"zip": str(zip_path)}
+if created_pdf:
+    result["pdf"] = str(pdf_path)
+else:
+    result["pdf_txt"] = str(root/"Proceso_Singularidad_Inmortal.txt")
+
+result
 
