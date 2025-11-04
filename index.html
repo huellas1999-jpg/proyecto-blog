@@ -1,15 +1,4 @@
-# Retry creating the project files and zip. This will produce the updated HTML/CSS, images, README and PDF (or text fallback).
-from pathlib import Path
-import textwrap, zipfile, os, shutil
-
-root = Path("/mnt/data/singularidad-inmortal-githubpages")
-if root.exists():
-    shutil.rmtree(root)
-root.mkdir(parents=True)
-(root/"img").mkdir()
-
-# HTML content
-index_html = """<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
