@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Blog | IA & Memoria Digital</title>
+  <link href="style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Entradas</h2>
+      <nav>
+        <ul>
+          <li><a href="#" onclick="showPost('post1')">¿Puede la IA preservar la conciencia humana?</a></li>
+          <li><a href="#" onclick="showPost('post2')">Memorias digitales: Cómo la IA puede almacenar nuestra identidad</a></li>
+          <li><a href="#" onclick="showPost('post3')">Avances actuales hacia la inmortalidad digital</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="content">
+      <div id="post1" class="blog-post visible">
+        <h1>¿Puede la IA preservar la conciencia humana?</h1>
+        <div class="img-text">
+          <img src="img/ai-consciousness.jpg" alt="Conciencia y IA"/>
+          <div>
+            <p>
+              La preservación de la conciencia humana es uno de los grandes retos de la tecnología moderna. Algunos expertos creen que tecnologías como el aprendizaje profundo y los modelos neuronales artificiales permitirán, en un futuro, replicar elementos de nuestra identidad y pensamiento.
+            </p>
+            <p>
+              Sin embargo, aún existen dudas éticas, filosóficas y técnicas sobre si es posible migrar la conciencia a medios digitales. ¿Es suficiente con replicar recuerdos y patrones, o la conciencia es algo intransferible?
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="post2" class="blog-post">
+        <h1>Memorias digitales: Cómo la IA puede almacenar nuestra identidad</h1>
+        <div class="img-text">
+          <img src="img/digital-memories.jpg" alt="Memorias digitales"/>
+          <div>
+            <p>
+              La IA ya es capaz de almacenar, organizar y evocar información sobre personas, desde datos biográficos hasta gustos personales. Este almacenamiento digital permite crear “avatares” que pueden predecir y simular respuestas semejantes a las de personas reales.
+            </p>
+            <p>
+              Pero, ¿dónde está el límite entre la copia y la identidad real? La frontera entre simulación y autenticidad seguirá siendo debate por mucho tiempo.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="post3" class="blog-post">
+        <h1>Avances actuales hacia la inmortalidad digital</h1>
+        <div class="img-text">
+          <img src="img/digital-immortality.jpg" alt="Inmortalidad digital"/>
+          <div>
+            <p>
+              Empresas y laboratorios de todo el mundo están invirtiendo en proyectos de “inmortalidad digital”. Algunos buscan archivar la mente, otros crear réplicas y otros desarrollar IA tan avanzadas que puedan continuar el legado de una persona.
+            </p>
+            <p>
+              Aunque la verdadera inmortalidad aún parezca lejana, estos avances abren caminos fascinantes y polémicos para el futuro de la memoria humana.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>
+    function showPost(id) {
+      document.querySelectorAll('.blog-post').forEach(post => post.classList.remove('visible'));
+      document.getElementById(id).classList.add('visible');
+    }
+  </script>
+</body>
+</html>
