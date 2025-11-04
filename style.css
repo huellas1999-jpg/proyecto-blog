@@ -107,12 +107,13 @@ h1{ margin-top:0; font-size:1.8rem; color:var(--accent); }
 }
 
 .imagen0-img img {
-  width: 65%;
-  max-width: 350px;
+  width: 45%;
+  max-width: 200px;
   height: auto;
   border-radius: 14px;
   box-shadow: 0 4px 18px rgba(0,0,0,0.15);
-  display: block;
+  flex: 0 0 300px;
+/*  display: block;*/
   margin: 0 auto; /* asegura centrado sin espacio extra */
 }
 .no-margin-bottom {
